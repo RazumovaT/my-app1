@@ -62,6 +62,7 @@
   "lint-staged": {
     "*.js": [
       "eslint",
+      "prettier",
       "npm run lint:fix",
       "git add"
     ]
