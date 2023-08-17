@@ -1,11 +1,10 @@
 import { Component, React } from 'react'
 import PropTypes from 'prop-types'
 
-const Filters = ['All', 'Active', 'Completed']
-
 export default class TaskFilter extends Component {
   render() {
-    const { activeFilter, setActiveFilter } = this.props
+    const { activeFilter, setActiveFilter, all, active, completed } = this.props
+    const Filters = [all, active, completed]
     return (
       <ul className="filters">
         {Filters.map((filter) => {

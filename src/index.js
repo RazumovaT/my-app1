@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client'
 import Header from './components/header'
 import ToDoList from './components/todo-list'
 import Footer from './components/footer'
+import { all, active, completed } from './components/filters'
 
 const root1 = document.getElementById('root1')
 const root = createRoot(root1)
@@ -14,36 +15,34 @@ class AppElements extends Component {
   state = {
     data: [],
     filteredArr: [],
-    activeFilter: 'All',
+    activeFilter: all,
   }
 
   setActiveFilter = (filterName) => {
-    this.setState({
-      activeFilter: filterName,
-    })
     switch (filterName) {
-      case 'All':
+      case all:
         this.setState(({ data }) => {
           return {
             filteredArr: data,
+            activeFilter: filterName,
           }
         })
         break
-      case 'Active':
+      case active:
         this.setState(({ data }) => {
-          const copy = JSON.parse(JSON.stringify(data))
-          const filteredArr = copy.filter((el) => !el.done)
+          const filteredArr = data.filter((el) => !el.done)
           return {
             filteredArr: filteredArr,
+            activeFilter: filterName,
           }
         })
         break
-      case 'Completed':
+      case completed:
         this.setState(({ data }) => {
-          const copy = JSON.parse(JSON.stringify(data))
-          const filteredArr = copy.filter((el) => el.done)
+          const filteredArr = data.filter((el) => el.done)
           return {
             filteredArr: filteredArr,
+            activeFilter: filterName,
           }
         })
         break
@@ -92,8 +91,7 @@ class AppElements extends Component {
 
   itemDone = (id) => {
     this.setState(({ data }) => {
-      const copy = JSON.parse(JSON.stringify(data))
-      let newArr = copy.map((el) => (el.id === id ? { ...el, done: !el.done } : { ...el }))
+      let newArr = data.map((el) => (el.id === id ? { ...el, done: !el.done } : { ...el }))
       return {
         data: newArr,
         filteredArr: newArr,
@@ -103,9 +101,7 @@ class AppElements extends Component {
 
   itemEdit = (id) => {
     this.setState(({ data }) => {
-      const copy = JSON.parse(JSON.stringify(data))
-
-      let newArr = copy.map((el) => (el.id === id ? { ...el, isEdit: !el.isEdit } : { ...el }))
+      let newArr = data.map((el) => (el.id === id ? { ...el, isEdit: !el.isEdit } : { ...el }))
       return {
         data: newArr,
         filteredArr: newArr,
@@ -115,8 +111,7 @@ class AppElements extends Component {
 
   clearCompleted = () => {
     this.setState(({ data }) => {
-      const copy = JSON.parse(JSON.stringify(data))
-      const newArr = copy.filter((el) => !el.done)
+      const newArr = data.filter((el) => !el.done)
       return {
         data: newArr,
         filteredArr: newArr,
@@ -126,8 +121,7 @@ class AppElements extends Component {
 
   onItemSubmit = (id, text) => {
     this.setState(({ data }) => {
-      const copy = JSON.parse(JSON.stringify(data))
-      let newArr = copy.map((el) =>
+      let newArr = data.map((el) =>
         el.id == id ? { ...el, label: text, isEdit: !el.isEdit, done: !el.done } : { ...el }
       )
       return {
@@ -157,6 +151,9 @@ class AppElements extends Component {
           activeFilter={this.state.activeFilter}
           setActiveFilter={this.setActiveFilter}
           clearCompleted={this.clearCompleted}
+          all={all}
+          active={active}
+          completed={completed}
         />
       </div>
     )
