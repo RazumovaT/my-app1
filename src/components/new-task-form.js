@@ -38,7 +38,7 @@ function NewTaskForm({
     <label>
       <li className={done ? 'completed' : ''} onClick={onItemDone}>
         <div className="view">
-          <input className="toggle" type="checkbox" name="checkbox" id={id} />
+          <input className="toggle" type="checkbox" name="checkbox" id={id} checked={done ? true : false} />
           <label htmlFor={id} onClick={onItemDone}>
             <span className="description">{label}</span>
             <span className="created">
