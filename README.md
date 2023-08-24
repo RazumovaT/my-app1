@@ -1,1 +1,1 @@
-https://my-7sr56z4d6-razumovat.vercel.app/
+https://my-app1-mtpj0ewb3-razumovat.vercel.app/
