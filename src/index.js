@@ -50,22 +50,24 @@ class AppElements extends Component {
         break
     }
   }
-  createItem(label) {
+  createItem(label, min, sec) {
     return {
       label,
       done: false,
       active: true,
       isEdit: false,
+      min,
+      sec,
       id: this.minId++,
       createdAt: Date.now(),
     }
   }
 
-  addItem = (text) => {
+  addItem = (text, min, sec) => {
     if (!text.length) {
       return
     }
-    const newItem = this.createItem(text)
+    const newItem = this.createItem(text, min, sec)
     this.setState(({ data }) => {
       const copy = JSON.parse(JSON.stringify(data))
       const newArr = [...copy, newItem]
